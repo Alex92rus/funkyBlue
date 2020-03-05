@@ -118,12 +118,12 @@ class MyGame(arcade.Window):
 
     def _swap_color(self, bounceDotSprite: BounceDotSprite):
         if bounceDotSprite.center_y > bounceDotSprite.window.height / 2 and bounceDotSprite.solidColor != "#0000ff":
-            #self.lives -= 1
-            #self.life_icons.pop()
+            self.lives -= 1
+            self.life_icons.pop()
             return bounceDotSprite.change_solid_color("#0000ff")
         elif bounceDotSprite.center_y < bounceDotSprite.window.height / 2 and bounceDotSprite.solidColor != "#ff0000":
-            #self.lives -= 1
-           # self.life_icons.pop()
+            self.lives -= 1
+            self.life_icons.pop()
             return bounceDotSprite.change_solid_color("#ff0000")
         return bounceDotSprite
 
