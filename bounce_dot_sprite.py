@@ -1,5 +1,5 @@
 import random
-
+import math
 from PIL import Image
 from arcade import SpriteSolidColor, Window, Texture
 
@@ -28,6 +28,6 @@ class BounceDotSprite(SpriteSolidColor):
         spriteDot.change_x, spriteDot.change_y = self.change_x, self.change_y
         return spriteDot
 
-    def rand_velocity(self, multiplier, directionX, directionY):
-        self.change_x = multiplier * random.uniform(directionX[0], directionX[1])
-        self.change_y = multiplier * random.uniform(directionY[0], directionY[1])
+    def rand_velocity(self, multiplier, start_angle, end_angle):
+        self.change_x = multiplier * math.sin(random.uniform(start_angle, end_angle))
+        self.change_y = multiplier * math.cos(random.uniform(start_angle, end_angle))

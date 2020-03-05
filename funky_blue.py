@@ -1,6 +1,6 @@
 import arcade
 from arcade import Sprite, Texture, SpriteList
-
+import math
 from bounce_dot_sprite import BounceDotSprite
 
 SCREEN_WIDTH = 600
@@ -29,12 +29,12 @@ class MyGame(arcade.Window):
         self.dots = []
         blueTopDot = BounceDotSprite(DOT_SIDE_LENGTH, DOT_SIDE_LENGTH, "#0000ff", self)
         placeSprite(blueTopDot, SCREEN_WIDTH // 2, SCREEN_HEIGHT - DOT_SIDE_LENGTH)
-        blueTopDot.rand_velocity(5, [-1, 1], [-1, 0])
+        blueTopDot.rand_velocity(5,  math.pi + 0.5 , 2 * (math.pi) - 0.5)
         self.dots.append(blueTopDot)
 
         redBottomDot = BounceDotSprite(DOT_SIDE_LENGTH, DOT_SIDE_LENGTH, "#ff0000", self)
         placeSprite(redBottomDot, SCREEN_WIDTH // 2, DOT_SIDE_LENGTH)
-        redBottomDot.rand_velocity(5, [-1, 1], [0, 1])
+        redBottomDot.rand_velocity(5, 0.5, math.pi - 0.5)
         self.dots.append(redBottomDot)
 
 
