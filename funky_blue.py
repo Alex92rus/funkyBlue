@@ -27,15 +27,15 @@ class MyGame(arcade.Window):
         placeSprite(self.current_Funky, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
         self.dots = []
-        spriteDot = BounceDotSprite(DOT_SIDE_LENGTH, DOT_SIDE_LENGTH, "#0000ff", self)
-        placeSprite(spriteDot, SCREEN_WIDTH // 2, SCREEN_HEIGHT - DOT_SIDE_LENGTH)
-        spriteDot.rand_velocity(5, [-1, 1], [-1, 0])
-        self.dots.append(spriteDot)
+        blueTopDot = BounceDotSprite(DOT_SIDE_LENGTH, DOT_SIDE_LENGTH, "#0000ff", self)
+        placeSprite(blueTopDot, SCREEN_WIDTH // 2, SCREEN_HEIGHT - DOT_SIDE_LENGTH)
+        blueTopDot.rand_velocity(5, [-1, 1], [-1, 0])
+        self.dots.append(blueTopDot)
 
-        spriteDot = BounceDotSprite(DOT_SIDE_LENGTH, DOT_SIDE_LENGTH, "#ff0000", self)
-        placeSprite(spriteDot, SCREEN_WIDTH // 2, DOT_SIDE_LENGTH)
-        spriteDot.rand_velocity(5, [-1, 1], [0, 1])
-        self.dots.append(spriteDot)
+        redBottomDot = BounceDotSprite(DOT_SIDE_LENGTH, DOT_SIDE_LENGTH, "#ff0000", self)
+        placeSprite(redBottomDot, SCREEN_WIDTH // 2, DOT_SIDE_LENGTH)
+        redBottomDot.rand_velocity(5, [-1, 1], [0, 1])
+        self.dots.append(redBottomDot)
 
 
         self.physics_engine = arcade.PhysicsEngineSimple(self.current_Funky, arcade.SpriteList())
@@ -80,13 +80,9 @@ class MyGame(arcade.Window):
                sprite.update()
                if self.current_Funky.left - sprite.width <= sprite.left <= self.current_Funky.right:
                    if sprite.change_y < 0 and abs(sprite.bottom - self.current_Funky.top) <= 2:
-                      sprite.change_x = - sprite.change_x
-                      sprite.change_y = - sprite.change_y
-                      self.score += 1
+                      self._reflect(sprite)
                    elif sprite.change_y > 0 and abs(sprite.top - self.current_Funky.bottom) <= 2:
-                       sprite.change_x = - sprite.change_x
-                       sprite.change_y = - sprite.change_y
-                       self.score += 1
+                       self._reflect(sprite)
                if self.current_Funky.bottom <= sprite.center_y <= self.current_Funky.top:
                    if abs(sprite.right - self.current_Funky.left) <= 2:
                        sprite.change_x = - sprite.change_x
@@ -110,11 +106,15 @@ class MyGame(arcade.Window):
         elif symbol == arcade.key.RIGHT and self.current_Funky.right < self.width:
             self.current_Funky.change_x = MOVEMENT_SPEED if self.current_Funky.right + MOVEMENT_SPEED <= self.width else self.width - self.current_Funky.right
 
-
     def on_key_release(self, symbol: int, modifiers: int):
 
         if symbol == arcade.key.LEFT or symbol == arcade.key.RIGHT:
             self.current_Funky.change_x = 0
+
+    def _reflect(self, sprite):
+        sprite.change_x = - sprite.change_x
+        sprite.change_y = - sprite.change_y
+        self.score += 1
 
     def _swap_color(self, bounceDotSprite: BounceDotSprite):
         if bounceDotSprite.center_y > bounceDotSprite.window.height / 2 and bounceDotSprite.solidColor != "#0000ff":
