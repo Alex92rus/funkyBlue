@@ -58,8 +58,14 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         if self.lives <= 0:
-            output = f"GAME OVER SCORE: {self.score}"
-            arcade.draw_text(output, (self.width // 2) - 150, self.height // 2, arcade.color.GREEN, 30, bold=True)
+            gameOverSign = f"GAME OVER SCORE: {self.score}"
+            arcade.draw_text(gameOverSign, self.width // 2, self.height // 2, arcade.color.NAPIER_GREEN, 30, bold=True,
+                    align = "center",
+                    anchor_x = "center", anchor_y = "center")
+            newGameSign = f"HIT RETURN TO START A NEW GAME"
+            arcade.draw_text(newGameSign, self.width // 2, self.height // 4, arcade.color.NAPIER_GREEN, 20, bold=True,
+                             align="center",
+                             anchor_x="center", anchor_y="center")
         else:
             self.current_Funky.draw()
             for sprite in self.dots:
@@ -101,6 +107,8 @@ class MyGame(arcade.Window):
 
     def on_key_press(self, symbol: int, modifiers: int):
 
+        if symbol == arcade.key.RETURN and self.lives == 0:
+            self.setup()
         if symbol == arcade.key.LEFT and self.current_Funky.left > 0:
             self.current_Funky.change_x = -MOVEMENT_SPEED if self.current_Funky.left > MOVEMENT_SPEED else - self.current_Funky.left
         elif symbol == arcade.key.RIGHT and self.current_Funky.right < self.width:
